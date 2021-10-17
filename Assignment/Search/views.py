@@ -1,6 +1,8 @@
 from django.db.models import Q
-
+from django.http import HttpResponse
+from rest_framework          import status
 from rest_framework.viewsets import ModelViewSet
+from rest_framework.response import Response
 
 from .serializers import ShopSerializer
 from .models      import Shop
@@ -11,8 +13,8 @@ class ShopViewSet(ModelViewSet):
     
     def get_queryset(self):
         qs     = super().get_queryset()
-        lat    = float(self.request.query_params.get('lat',None))
-        lon    = float(self.request.query_params.get('lon',None))
+        lat    = float(self.request.query_params.get('lat',0))
+        lon    = float(self.request.query_params.get('lon',0))
         search = self.request.query_params.get('search',None)
         
         # 특정 키워드가 포함된 데이터 필터링
